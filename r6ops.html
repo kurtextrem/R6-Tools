@@ -1,0 +1,246 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width">
+	<title>Map Pool - ESL - Rainbow Six Siege</title>
+	<style>
+		body {
+			font-size: 23px;
+		}
+
+		div {
+			margin: 15px;
+		}
+
+		input {
+			margin-right: 10px;
+		}
+
+		label {
+			transition: color 200ms ease-out;
+		}
+
+		:checked+label {
+			text-decoration: line-through;
+			color: #9E9E9E;
+		}
+
+		input[type="checkbox"] {
+			height: 13px;
+			position: relative;
+			width: 13px;
+		}
+
+		select,
+		input[type="checkbox"],
+		input[type="radio"] {
+			-webkit-appearance: none;
+			user-select: none;
+			background-image: linear-gradient(rgb(237, 237, 237) 38%, rgb(222, 222, 222));
+			box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 0px, rgba(255, 255, 255, 0.75) 0px 1px 2px inset;
+			color: rgb(68, 68, 68);
+			text-shadow: rgb(240, 240, 240) 0px 1px 0px;
+			border-width: 1px;
+			border-style: solid;
+			border-color: rgba(0, 0, 0, 0.25);
+			border-image: initial;
+			border-radius: 2px;
+			font: inherit;
+			margin: 0px 1px 0px 0px;
+			outline: none;
+		}
+
+		input[type="checkbox"]::before {
+			opacity: 0;
+			user-select: none;
+			background-image: none;
+			background-size: 100% 100%;
+			content: "";
+			display: block;
+			height: 100%;
+			width: 100%;
+			transition: opacity 200ms ease-out;
+		}
+
+		input[type="checkbox"]:checked::before {
+			opacity: 1;
+			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAQAAAADpb+tAAAAaElEQVR4Xl3PIQoCQQCF4Y8JW42D1bDZ4iVEjDbxFpstYhC7eIVBZHkXFGw734sv/TqDQQ8Xb1udja/I8igeIm7Aygj2IpoKTGZnVRNxAHYi4iPiDlA9xX+aNQDFySziqDN6uSp6y7ofEMwZ05uUZRkAAAAASUVORK5CYII=);
+		}
+
+		h1 {
+			margin: none;
+		}
+	</style>
+</head>
+<body>
+	<form>
+		<h1>Attacker</h1>
+
+		<div>
+			<input type="checkbox" id="Sledge" name="Sledge" value="1">
+			<label for="Sledge">Sledge</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Thatcher" name="Thatcher" value="1">
+			<label for="Thatcher">Thatcher</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Ash" name="Ash" value="1">
+			<label for="Ash">Ash</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Thermite" name="Thermite" value="1">
+			<label for="Thermite">Thermite</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Twitch" name="Twitch" value="1">
+			<label for="Twitch">Twitch</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Montagne" name="Montagne" value="1">
+			<label for="Montagne">Montagne</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Glaz" name="Glaz" value="1">
+			<label for="Glaz">Glaz</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Fuze" name="Fuze" value="1">
+			<label for="Fuze">Fuze</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Blitz" name="Blitz" value="1">
+			<label for="Blitz">Blitz</label>
+		</div>
+		<div>
+			<input type="checkbox" id="IQ" name="IQ" value="1">
+			<label for="IQ">IQ</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Buck" name="Buck" value="1">
+			<label for="Buck">Buck</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Blackbeard" name="Blackbeard" value="1">
+			<label for="Blackbeard">Blackbeard</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Capitao" name="Capitao" value="1">
+			<label for="Capitao">Capitao</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Hibana" name="Hibana" value="1">
+			<label for="Hibana">Hibana</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Jackal" name="Jackal" value="1">
+			<label for="Jackal">Jackal</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Ying" name="Ying" value="1">
+			<label for="Ying">Ying</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Sofia" name="Sofia" value="1">
+			<label for="Sofia">Sofia</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Dokkabae" name="Dokkabae" value="1">
+			<label for="Dokkabae">Dokkabae</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Lion" name="Lion" value="1">
+			<label for="Lion">Lion</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Finka" name="Finka" value="1">
+			<label for="Finka">Finka</label>
+		</div>
+
+		<h1>Defender</h1>
+
+		<div>
+			<input type="checkbox" id="Castle" name="Castle" value="1">
+			<label for="Castle">Castle</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Pulse" name="Pulse" value="1">
+			<label for="Pulse">Pulse</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Doc" name="Doc" value="1">
+			<label for="Doc">Doc</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Rook" name="Rook" value="1">
+			<label for="Rook">Rook</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Kapkan" name="Kapkan" value="1">
+			<label for="Kapkan">Kapkan</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Chanka" name="Chanka" value="1">
+			<label for="Chanka">Chanka</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Jäger" name="Jäger" value="1">
+			<label for="Jäger">Jäger</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Bandit" name="Bandit" value="1">
+			<label for="Bandit">Bandit</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Frost" name="Frost" value="1">
+			<label for="Frost">Frost</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Valk" name="Valk" value="1">
+			<label for="Valk">Valk</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Caveira" name="Caveira" value="1">
+			<label for="Caveira">Caveira</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Echo" name="Echo" value="1">
+			<label for="Echo">Echo</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Mira" name="Mira" value="1">
+			<label for="Mira">Mira</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Lesion" name="Lesion" value="1">
+			<label for="Lesion">Lesion</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Ela" name="Ela" value="1">
+			<label for="Ela">Ela</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Vigil" name="Vigil" value="1">
+			<label for="Vigil">Vigil</label>
+		</div>
+
+		<div>
+			<input type="checkbox" id="clear" onchange="window.setTimeout(() => document.forms[0].reset(), 300)">
+		</div>
+	</form>
+
+	<script>
+		const form = document.forms[0],
+			data = JSON.parse(window.sessionStorage.form || '[]');
+
+		[].forEach.call(document.getElementsByTagName('input'), elem => {
+			if (data.includes(elem.id))
+				elem.checked = true
+		})
+
+		form.addEventListener('change', e => {
+			window.sessionStorage.form = JSON.stringify(Array.from(new FormData(form).entries(), e => e[0]))
+		})
+	</script>
+</body>
+</html>

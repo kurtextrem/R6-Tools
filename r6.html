@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width">
+	<title>Map Pool - ESL - Rainbow Six Siege</title>
+	<style>
+		body {
+			font-size: 23px;
+		}
+
+		div {
+			margin: 15px;
+		}
+
+		input {
+			margin-right: 10px;
+		}
+
+		label {
+			transition: color 200ms ease-out;
+		}
+
+		:checked+label {
+			text-decoration: line-through;
+			color: #9E9E9E;
+		}
+
+		input[type="checkbox"] {
+			height: 13px;
+			position: relative;
+			width: 13px;
+		}
+
+		select,
+		input[type="checkbox"],
+		input[type="radio"] {
+			-webkit-appearance: none;
+			user-select: none;
+			background-image: linear-gradient(rgb(237, 237, 237) 38%, rgb(222, 222, 222));
+			box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 0px, rgba(255, 255, 255, 0.75) 0px 1px 2px inset;
+			color: rgb(68, 68, 68);
+			text-shadow: rgb(240, 240, 240) 0px 1px 0px;
+			border-width: 1px;
+			border-style: solid;
+			border-color: rgba(0, 0, 0, 0.25);
+			border-image: initial;
+			border-radius: 2px;
+			font: inherit;
+			margin: 0px 1px 0px 0px;
+			outline: none;
+		}
+
+		input[type="checkbox"]::before {
+			opacity: 0;
+			user-select: none;
+			background-image: none;
+			background-size: 100% 100%;
+			content: "";
+			display: block;
+			height: 100%;
+			width: 100%;
+			transition: opacity 200ms ease-out;
+		}
+
+		input[type="checkbox"]:checked::before {
+			opacity: 1;
+			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAQAAAADpb+tAAAAaElEQVR4Xl3PIQoCQQCF4Y8JW42D1bDZ4iVEjDbxFpstYhC7eIVBZHkXFGw734sv/TqDQQ8Xb1udja/I8igeIm7Aygj2IpoKTGZnVRNxAHYi4iPiDlA9xX+aNQDFySziqDN6uSp6y7ofEMwZ05uUZRkAAAAASUVORK5CYII=);
+		}
+	</style>
+</head>
+<body>
+	<form>
+		<!-- <div>
+			<input type="checkbox" id="Bank" name="Bank" value="1">
+			<label for="Bank">Bank</label>
+		</div> -->
+		<div>
+			<input type="checkbox" id="Border" name="Border" value="1">
+			<label for="Border">Border</label>
+		</div>
+		<!-- <div>
+			<input type="checkbox" id="Chalet" name="Chalet" value="1">
+			<label for="Chalet">Chalet</label>
+		</div> -->
+		<div>
+			<input type="checkbox" id="Club" name="Club" value="1">
+			<label for="Club">Club House</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Coastline" name="Coastline" value="1">
+			<label for="Coastline">Coastline</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Consulate" name="Consulate" value="1">
+			<label for="Consulate">Consulate</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Kafe" name="Kafe" value="1">
+			<label for="Kafe">Kafe Dostoyevsky</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Theme" name="Theme" value="1">
+			<label for="Theme">Theme Park</label>
+		</div>
+		<div>
+			<input type="checkbox" id="Villa" name="Villa" value="1">
+			<label for="Villa">Villa</label>
+		</div>
+		<!-- <div>
+			<input type="checkbox" id="Skyscraper" name="Skyscraper" value="1">
+			<label for="Skyscraper">Skyscraper</label>
+		</div> -->
+		<!-- <div>
+			<input type="checkbox" id="Oregon" name="Oregon" value="1">
+			<label for="Oregon">Oregon</label>
+		</div> -->
+		<div>
+			<input type="checkbox" id="clear" onchange="window.setTimeout(() => document.forms[0].reset(), 300)">
+		</div>
+	</form>
+
+	<script>
+		const form = document.forms[0],
+			data = JSON.parse(window.sessionStorage.form || '[]');
+
+		[].forEach.call(document.getElementsByTagName('input'), elem => {
+			if (data.includes(elem.id))
+				elem.checked = true
+		})
+
+		form.addEventListener('change', e => {
+			window.sessionStorage.form = JSON.stringify(Array.from(new FormData(form).entries(), e => e[0]))
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width">
+	<title>To what color do you react the fastest? - Psychology / Human benchmark</title>
+	<style>
+		div, details {
+			margin: 15px;
+		}
+
+		input {
+			margin-right: 10px;
+		}
+
+		output {
+			font-weight: bold;
+		}
+
+		a, a:visited {
+    		color: gray;
+    		text-decoration: none;
+    		background-color: transparent;
+		}
+
+		a:hover, a:focus {
+    		text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<p>Use this test to find out how fast you respond to different colors. <b>Epilepsy warning, because of flashing colors.</b></p>
+		<details>
+			<summary>Instructions <i>(click here)</i></summary>
+		1) Choose a background color below - the background color of this site will change to the selected color at a random time after you click start<br>
+		2) Choose the amount of iterations (to get a good average value)<br>
+		3) When you notice the color change, click anywhere as fast as possible<br>
+		<br>
+		When you compare two colors (red &amp; green?), any of those two colors will appear so you can find out to what you react the fastest. A mix of colors makes it harder to get used to a pattern, like when you wait for the same color 10 times in a row.
+		</details>
+		<details>
+			<summary>What does science say? <i>(click here)</i></summary>
+			Science hints to <b>red</b> and <b>green</b> being the <b>best colors</b> <small>[<a href="https://pubmed.ncbi.nlm.nih.gov/12613397/">1</a><sup>green > red</sup>][<a href="https://www.researchgate.net/publication/287230923_Effect_of_Colour_of_Object_on_Simple_Visual_Reaction_Time_in_Normal_Subjects">2</a><sup>red > green</sup>][<a href="http://www.ijcep.org/index.php/ijcep/article/download/187/167">3</a><sup>red > green</sup>][<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4280496/">4</a><sup>red = green > yellow</sup>]</small>.<br>
+			Blue and especially yellow perform worse (less receptors in the eyes for blue colors, and yellow is a mix) [<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4280496/">4</a>].
+		</details>
+		<p>
+			Please note: Just because you might react a bit faster to red, doesn't automatically mean a red scope is better for you. It could also be that a red scope distracts you a little more than a green, or orange one does. Another factor is, with what color you can track opponents better - that's where you need to get into T-Hunt.
+		</p>
+		<p><b>Never test too many colors in a row. Your eyes need a break.</b> Made with <3 by <a href="https://twitter.com/kurtextrem">@kurtextrem</a> w/ psychology knowledge from university.</p>
+	</div>
+	<details>
+			<summary>View Results <i>(click here)</i></summary>
+			<div id="result">
+				<!--Green: <b>230ms</b> avg <small>(120ms, 300ms, 250ms)</small><br>
+				Red: <b>250ms</b> avg <small>(120ms, 300ms, 250ms)</small><br>
+				<br>
+				Overall: <b>Green</b> > Red for <i>you</i>-->
+			</div>
+	</details>
+<form name="form">
+<select name="color1">
+<option selected value="red">Red
+<option value="green">Green
+<option value="lime">Light Green
+<option value="orange">Orange
+<option value="lightblue">Light Blue
+<option value="blue">Blue
+<option value="turquoise">Turquoise
+<option value="yellow">Yellow
+<option value="pink">Pink
+<option value="white">White
+<option value="black">Black
+</select>
+vs.
+<select name="color2">
+<option selected value="0">none
+<option value="green">Green
+<option value="lime">Light Green
+<option value="orange">Orange
+<option value="lightblue">Light Blue
+<option value="blue">Blue
+<option value="turquoise">Turquoise
+<option value="yellow">Yellow
+<option value="pink">Pink
+<option value="white">White
+<option value="black">Black
+</select>
+
+<label><input type="number" min="1" max="100" value="5" name="i">How often each color:</label> 
+<button name="start" type="button" onclick="startTest()">Start</button>
+</form>
+
+	<script>
+		var $ = _ => document.querySelector(_)
+
+		var isActive = false
+		var started = false
+		var maxWait = 7
+
+		var timerID
+		var results
+
+		async function startTest() {
+			if (started) {
+				started = false
+				isActive = false
+				document.form.start.textContent = 'Start'
+				return
+			}
+			started = true
+
+			document.form.start.textContent = 'Stop'
+
+			var inARow, totalIterations = +document.form.i.value, inARow = +totalIterations + 1, tests = []
+
+			var color1 = document.form.color1.value
+			var color2 = document.form.color2.value
+			
+			if (color1 === 'white' && color2 === 'black' || color1 === 'black' && color2 === 'white' ) {
+				alert('Please don\'t test white and black together, use e.g. red and black and red and white to compare white & black')
+				return
+			}
+
+			results = Object.create(null)
+			results[color1] = []
+
+			var flip = 1
+			if (color2 !== '0') {
+				inARow = Math.round(Math.random() * totalIterations) + 1 // 1 .. 10
+				results[color2] = []
+				totalIterations = totalIterations * 2
+				flip = Math.round(Math.random())
+			}
+
+			var resetColor = 'white'
+			if (color1 === 'white' || color2 === 'white') {
+				resetColor = 'black'
+			}
+
+			document.bgColor = resetColor
+
+			while (tests.length < totalIterations) {
+				for (let i = 0; i < inARow - 1; ++i) {
+					tests.push(flip ? color1 : color2)
+				}
+				flip = !flip
+			}
+
+			for (let i = 0; i < tests.length; ++i) {
+				if (!started) return
+				isActive = true
+				await test(1250 + 6000*randNumber(), tests[i], resetColor)
+			}
+
+
+			for (let el in results) {
+				$('#result').innerHTML += el + ': ' 
+				for (let i = 0; i < results[el].length; ++i) {
+					$('#result').innerHTML += results[el][i] + 'ms, '
+				}
+				$('#result').innerHTML += '<br>' 
+			}
+
+			document.form.start.textContent = 'Done, click to start again'
+			started = false
+		}
+
+		function test(time, color, resetColor) {
+			return new Promise(function(resolve, reject) {
+				timerID = setTimeout(function() {
+					document.addEventListener('click', function() {
+						collectResult(color)
+						document.bgColor=resetColor
+						resolve()
+					}, { once: true })
+
+					document.bgColor=color
+					results[color].push(Date.now())
+				}, time)
+			})
+		}
+
+		function collectResult(color) {
+			const now = Date.now()
+			if (isActive) {
+				isActive = false
+				var el = results[color].length - 1
+				results[color][el] = (now - results[color][el])
+			}
+		}
+
+
+
+		// start -> stop -> done
+		// start in 5.. 4.. 3.. 2.. 1
+
+		// Original:  Jasper van Zandbeek
+var randMULTIPLIER=0x015a4e35;
+var randINCREMENT=1;
+var randSeed=new Date().getSeconds();
+function randNumber() {
+randSeed = (randMULTIPLIER * randSeed + randINCREMENT) % (1 << 31);
+return((randSeed >> 15) & 0x7fff) / 32767;
+}
+	</script>
+</body>
+</html>

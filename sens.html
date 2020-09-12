@@ -1,0 +1,388 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width">
+	<title>Convert pre-Shadow Legacy to Shadow Legacy ADS - Rainbow Six Siege</title>
+	<style>
+		body, input, select {
+			font-size: 21px;
+		}
+
+		div, details {
+			margin: 15px;
+		}
+
+		input[type="number"] {
+			width: 50px;
+		}
+
+		.gamesettings {
+			display: block;
+    		font-family: monospace;
+    		white-space: pre;
+    		margin: 1em 0px;
+    		
+		}
+
+		output[name="x1"], output[name="x25"] {
+			font-weight: bold;
+		}
+
+		.xs {
+			font-size: 0.7em;
+		}
+
+		.xss {
+			font-size: 0.5em;
+		}
+
+		p {
+			margin: 0;
+		}
+
+		a, a:visited {
+    		color: rgb(27, 149, 224);
+    		text-decoration: none;
+    		background-color: transparent;
+		}
+
+		a:hover, a:focus {
+    		text-decoration: underline;
+		}
+
+		.warning2 { display: none; }
+
+		li > [class$="NEW"]:not(:empty)::before, div:not(.gamesettings) > [class$="NEW"]:not(:empty)::before{ content: ' = '; }
+		li > [class$="NEW"]:not(:empty)::after, div:not(.gamesettings) > [class$="NEW"]:not(:empty)::after { content: ' *'; color: red; }
+
+		/*!
+		 * animate.css - https://animate.style/
+		 * Version - 4.0.0
+		 * Licensed under the MIT license - http://opensource.org/licenses/MIT
+		 *
+		 * Copyright (c) 2020 Animate.css
+		 */
+		:root {
+		  --animate-duration: 1s;
+		  --animate-delay: 1s;
+		  --animate-repeat: 1;
+		}
+				/* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+		@-webkit-keyframes flash {
+		  from,
+		  50%,
+		  to {
+		    opacity: 1;
+		  }
+		
+		  25%,
+		  75% {
+		    opacity: 0;
+		  }
+		}
+		@keyframes flash {
+		  from,
+		  50%,
+		  to {
+		    opacity: 1;
+		  }
+		
+		  25%,
+		  75% {
+		    opacity: 0;
+		  }
+		}
+		.animate__flash {
+		  -webkit-animation-name: flash;
+		  animation-name: flash;
+		}
+		.animate__animated {
+		  -webkit-animation-duration: 1s;
+		  animation-duration: 1s;
+		  -webkit-animation-duration: var(--animate-duration);
+		  animation-duration: var(--animate-duration);
+		  -webkit-animation-fill-mode: both;
+		  animation-fill-mode: both;
+		}
+		.code { font-family: monospace; }
+		/* Spin Buttons modified */
+input[type="number"]::-webkit-outer-spin-button, 
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    background: #FFF url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAKUlEQVQYlWNgwAT/sYhhKPiPT+F/LJgEsHv37v+EMGkmkuImoh2NoQAANlcun/q4OoYAAAAASUVORK5CYII=) no-repeat center center;
+    width: 1em;
+    border-left: 1px solid #BBB;
+    opacity: .5; /* shows Spin Buttons per default (Chrome >= 39) */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+input[type="number"]::-webkit-inner-spin-button:hover,
+input[type="number"]::-webkit-inner-spin-button:active{
+    box-shadow: 0 0 2px #0CF;
+    opacity: .8;
+}
+input[type="number"] {
+    position: relative;
+    border: 1px solid #BBB;
+    border-color: #BBB #ECECEC #ECECEC #BBB;
+    padding: .2rem;
+}
+	</style>
+</head>
+<body>
+	<form name="form">
+		<div>
+			<label for="sens">Pre-Shadow Legacy (Live) <b>ADS</b> sensitivity:</label>&nbsp;
+			<input type="number" id="sens" name="sens" value="83" min="1">
+			<br>
+			<label>Aspect ratio: 
+				<select name="aspect">
+					<option value="16/9" selected>16:9 (Auto)</option>
+					<option value="16/10">16:10</option>
+					<option value="4/3">4:3</option>
+					<option value="3/2">3:2</option>
+					<option value="5/3">5:3</option>
+					<option value="5/4">5:4</option>
+					<option value="19/10">19:10</option>
+					<option value="21/9">21:9</option>
+				</select>
+			</label><br>
+			<label>FOV: <input type="number" name="fov" value="75" max="90" min="60"></label><br>
+		</div>
+		<b style="color:red">Read first </b> - make your <b>choice</b> (do 1 of 4):<br>
+		<ol type="a" style="margin-top: 0em">
+			<li>Set every sens to <b id="x1x"></b><span class="x1NEW"></span> (1.0x), so every scope will match the <b>old Holo/Reflex/Reddot</b> sens <span class="xs"><i>(good for eye-hand memory)</i></span>
+			<li>Set every sens to <b id="x25x"></b><span class="x25NEW"></span> (2.5x), so every scope will match the <b>old ACOG</b> sens <span class="xs"><i>(good for eye-hand memory)</i></span>
+			<li>Set every sens to <b>50</b>, this will match your Shadow Legacy hipfire sens 1:1 on all scopes <span class="xss"><i>(it will match the <a href="https://twitter.com/kurtextrem/status/1296519586456772610">Visuomotor</a>, not 360° distance!)</i></span>
+			<li>Or, restore the old behavior (pre-Shadow Legacy) - use all the values of the calculator to match the old feeling <small class="xs">(uses official <a href="https://www.ubisoft.com/en-us/game/rainbow-six/siege/news-updates/3IMlDGlaRFgdvQNq3BOSFv/guide-to-ads-sensitivity-in-y5s3">Ubisoft</a> values):</small>
+		</ol>
+		<div id="warning" class="animate__animated"></div>
+		<div class="xs"><label><input type="checkbox" name="additional">Show decimals</label></div>
+		<div>
+			<p class="xs">Scope: Sens</p>
+			1.0x: <output name="x1" for="sens"></output><span class="x1NEW"></span><br>
+			1.5x: <output name="x15" for="sens"></output><span class="x15NEW"></span><br>
+			2.0x: <output name="x2" for="sens"></output><span class="x2NEW"></span><br>
+			2.5x (new ACOG): <output name="x25" for="sens"></output><span class="x25NEW"></span><br>
+			3.0x: <output name="x3" for="sens"></output><span class="x3NEW"></span><br>
+			4.0x: <output name="x4" for="sens"></output><span class="x4NEW"></span><br>
+			5.0x: <output name="x5" for="sens"></output><span class="x5NEW"></span><br>
+			12.0x: <output name="x12" for="sens"></output><span class="x12NEW"></span><br>
+		</div>
+<details class="xs">
+			<summary>Click to see GameSettings.ini (entries are below <span style="font-family:monospace">[INPUT]</span>)</summary>
+<div class="gamesettings">AimDownSightsMouse=<span class="sens1">55</span>
+ADSMouseUseSpecific=1
+ADSMouseSensitivityGlobal=<span class="sens2">50</span>
+ADSMouseSensitivity1x=<span id="x1">38</span>
+ADSMouseSensitivity1xHalf=<span id="x15">61</span>
+ADSMouseSensitivity2x=<span id="x2">62</span>
+ADSMouseSensitivity2xHalf=<span id="x25">62</span>
+ADSMouseSensitivity3x=<span id="x3">63</span>
+ADSMouseSensitivity4x=<span id="x4">63</span>
+ADSMouseSensitivity5x=<span id="x5">63</span>
+ADSMouseSensitivity12x=<span id="x12">97</span>
+ADSMouseMultiplierUnit=0.020000</div>
+<div id="warning2"><b>If you change ADSMouseMultiplierUnit:</b>
+<div class="gamesettings">AimDownSightsMouse=<span class="sens1">55</span>
+ADSMouseUseSpecific=1
+ADSMouseSensitivityGlobal=<span class="sens2">50</span>
+ADSMouseSensitivity1x=<span class="x1NEW">38</span>
+ADSMouseSensitivity1xHalf=<span class="x15NEW">61</span>
+ADSMouseSensitivity2x=<span class="x2NEW">62</span>
+ADSMouseSensitivity2xHalf=<span class="x25NEW">62</span>
+ADSMouseSensitivity3x=<span class="x3NEW">63</span>
+ADSMouseSensitivity4x=<span class="x4NEW">63</span>
+ADSMouseSensitivity5x=<span class="x5NEW">63</span>	
+ADSMouseSensitivity12x=<span class="x12NEW">97</span>
+ADSMouseMultiplierUnit=0.010000</div></div>
+</details>
+<hr>
+		<main class="xs">
+			09/11/2020:
+			<div style="margin-top: 0.4em; margin-left: 0.5em">Added "Show decimals" option. You can use it to make the calculation more accurate, requires changing GameSettings.ini though.<br>I'll use Twitter (<a href="https://twitter.com/kurtextrem">@kurtextrem</a>) to communicate further updates.
+			</div>
+			<br><small>P.S.: If you have changed your <span class="code">XFactorAiming</span> value in GameSettings.ini, you need to set the exact value to <span class="code">ADSMouseMultiplierUnit</span> now in GameSettings.ini.</small><br>
+			<small>P.S.²: Console Aspect Ratio is 16:9, FOV is 60.</small><br>
+			<small>P.S.²: Calculator made with ❤️ by <a href="https://twitter.com/kurtextrem">@kurtextrem</a> <i>(me)</i>. Thanks for helping initially <a href="https://twitter.com/LightleRyan">@LightleRyan</a>.</small>
+		</main>
+	</form>
+
+	<script>
+		'use strict'
+		var $ = _ => document.querySelector(_)
+
+		if (window.requestAnimationFrame === undefined) window.requestAnimationFrame = function (fn) { window.setTimeout(fn, 16) }
+		window.requestAnimationFrame(function() {
+			loadFromStorage()
+			calcSens()
+		})
+
+		function loadFromStorage() {
+			var data = localStorage.data
+			if (data === undefined) return
+
+			var json = JSON.parse(data)
+			for (var el in json) {
+				var value = json[el]
+				if (typeof value === 'boolean') $('input[name="' + el + '"]').checked = value
+				else if (typeof value === 'string') $('option[value="' + value + '"]').selected = true
+				else $('[name="' + el + '"]').value = value
+			}
+		}
+
+		function formReducer(data, element) {
+			var type = element.type
+			if (type === 'checkbox') data[element.name] = element.checked
+			else if (type.indexOf('select') !== -1) data[element.name] = element.value
+			else if (type === 'number') data[element.name] = +element.value
+
+			return data
+		}
+
+		function saveToStorage() {
+			try {
+				localStorage.data = JSON.stringify([].reduce.call(document.form.elements, formReducer, {}))
+			} catch(e) {}
+		}
+
+		document.form.addEventListener('input', e => {
+			calcSens()
+			saveToStorage()
+		})
+
+		document.form.aspect.addEventListener('change', e => {
+			calcSens()
+		})
+
+		function calcSens() {
+			var vFOV_rad = document.form.fov.value * (Math.PI/180)
+			var aspectParts = document.form.aspect.value.split('/')
+			var aspect = (+aspectParts[0])/(+aspectParts[1])
+			var hFOV = 2*Math.atan(Math.tan(vFOV_rad/2)*aspect)
+			var vFOV_rad_updated = hFOV > 2.61798 ? 2*Math.atan(Math.tan(1.309)/aspect) : vFOV_rad
+			var over100 = false
+
+			var ads = document.form.sens.value
+			$('.sens1').textContent = ads
+			$('.sens2').textContent = ads
+
+			var fovmult = 0.9
+			var adsmult = 0.6
+			var fovadj = Math.tan(fovmult*vFOV_rad_updated/2)/Math.tan(vFOV_rad_updated/2)
+			var x1 = (adsmult/fovadj)*ads
+
+			fovmult = 0.59
+			adsmult = 0.59
+			fovadj = Math.tan(fovmult*vFOV_rad_updated/2)/Math.tan(vFOV_rad_updated/2)
+			var x15 = (adsmult/fovadj)*ads
+
+			fovmult = 0.49
+			adsmult = 0.49
+			fovadj = Math.tan(fovmult*vFOV_rad_updated/2)/Math.tan(vFOV_rad_updated/2)
+			var x2 = (adsmult/fovadj)*ads
+
+			fovmult = 0.42
+			adsmult = 0.42
+			fovadj = Math.tan(fovmult*vFOV_rad_updated/2)/Math.tan(vFOV_rad_updated/2)
+			var x25 = (adsmult/fovadj)*ads
+
+			fovmult = 0.35
+			adsmult = 0.35
+			fovadj = Math.tan(fovmult*vFOV_rad_updated/2)/Math.tan(vFOV_rad_updated/2)
+			var x3 = (adsmult/fovadj)*ads // old acog
+
+			fovmult = 0.3
+			adsmult = 0.3
+			fovadj = Math.tan(fovmult*vFOV_rad_updated/2)/Math.tan(vFOV_rad_updated/2)
+			var x4 = (adsmult/fovadj)*ads
+
+			fovmult = 0.22
+			adsmult = 0.22
+			fovadj = Math.tan(fovmult*vFOV_rad_updated/2)/Math.tan(vFOV_rad_updated/2)
+			var x5 = (adsmult/fovadj)*ads
+
+			fovmult = 0.092
+			adsmult = 0.14
+			fovadj = Math.tan(fovmult*vFOV_rad_updated/2)/Math.tan(vFOV_rad_updated/2)
+			var x12 = (adsmult/fovadj)*ads
+
+			if (document.form.additional.checked) {
+				var x1NEW = Math.round(x1*2)
+				var x15NEW = Math.round(x15*2)
+				var x2NEW = Math.round(x2*2)
+				var x25NEW = Math.round(x25*2)
+				var x3NEW = Math.round(x3*2)
+				var x4NEW = Math.round(x4*2)
+				var x5NEW = Math.round(x5*2)
+				var x12NEW = Math.round(x12*2)
+
+				document.querySelectorAll('.x1NEW').forEach(function(el) {el.innerHTML = x1NEW})
+				document.querySelectorAll('.x15NEW').forEach(function(el) {el.innerHTML = x15NEW})
+				document.querySelectorAll('.x2NEW').forEach(function(el) {el.innerHTML = x2NEW})
+				document.querySelectorAll('.x25NEW').forEach(function(el) {el.innerHTML = x25NEW})
+				document.querySelectorAll('.x3NEW').forEach(function(el) {el.innerHTML = x3NEW})
+				document.querySelectorAll('.x4NEW').forEach(function(el) {el.innerHTML = x4NEW})
+				document.querySelectorAll('.x5NEW').forEach(function(el) {el.innerHTML = x5NEW})
+				document.querySelectorAll('.x12NEW').forEach(function(el) {el.innerHTML = x12NEW})
+
+				x1 = Math.round((x1 + Number.EPSILON) * 100) / 100
+				x15 = Math.round((x15 + Number.EPSILON) * 100) / 100
+				x2 = Math.round((x2 + Number.EPSILON) * 100) / 100
+				x25 = Math.round((x25 + Number.EPSILON) * 100) / 100
+				x3 = Math.round((x3 + Number.EPSILON) * 100) / 100
+				x4 = Math.round((x4 + Number.EPSILON) * 100) / 100
+				x5 = Math.round((x5 + Number.EPSILON) * 100) / 100
+				x12 = Math.round((x12 + Number.EPSILON) * 100) / 100
+
+				$('#warning').innerHTML = '<b><span style="color:red">Important ⚠️:</span></b><br>If you want to use the value marked with <span style="color:red">*</span>, you MUST open <b>GameSettings.ini</b> to set: <span class="code">ADSMouseMultiplierUnit=0.01</span> <small>(default is: 0.02)</small>. <small>Note: Values over 200 do not work.</small>'
+				$('#warning2').style.display = 'block'
+				$('#warning').classList.add('animate__flash')
+			} else {
+				document.querySelectorAll('.x1NEW').forEach(function(el) {el.textContent = ''})
+				document.querySelectorAll('.x15NEW').forEach(function(el) {el.textContent = ''})
+				document.querySelectorAll('.x2NEW').forEach(function(el) {el.textContent = ''})
+				document.querySelectorAll('.x25NEW').forEach(function(el) {el.textContent = ''})
+				document.querySelectorAll('.x3NEW').forEach(function(el) {el.textContent = ''})
+				document.querySelectorAll('.x4NEW').forEach(function(el) {el.textContent = ''})
+				document.querySelectorAll('.x5NEW').forEach(function(el) {el.textContent = ''})
+				document.querySelectorAll('.x12NEW').forEach(function(el) {el.textContent = ''})
+				$('#warning').innerHTML = ''
+				$('#warning2').style.display = 'none'
+				$('#warning').classList.remove('animate__flash')
+
+				x1 = Math.round(x1)
+				x15 = Math.round(x15)
+				x2 = Math.round(x2)
+				x25 = Math.round(x25)
+				x3 = Math.round(x3)
+				x4 = Math.round(x4)
+				x5 = Math.round(x5)
+				x12 = Math.round(x12)
+			}
+
+
+			document.form.x1.value = x1
+			$('#x1').textContent = x1
+			$('#x1x').textContent = x1
+			document.form.x15.value = x15
+			$('#x15').textContent = x15
+			document.form.x2.value = x2
+			$('#x2').textContent = x2
+			document.form.x25.value = x25
+			$('#x25').textContent = x25
+			$('#x25x').textContent = x25
+			document.form.x3.value = x3
+			$('#x3').textContent = x3
+			document.form.x4.value = x4
+			$('#x4').textContent = x4
+			document.form.x5.value = x5
+			$('#x5').textContent = x5
+			document.form.x12.value = x12
+			$('#x12').textContent = x12
+		}
+	</script>
+</body>
+</html>
