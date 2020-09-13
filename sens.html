@@ -6,6 +6,8 @@
     <style>
       body {
         margin: 0;
+        font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        text-rendering: optimizeLegibility;
       }
 
       body, input, select {
@@ -100,7 +102,7 @@
       b + span[class$='NEW']:not(:empty)::after,
       div:not(.gamesettings) > [class$='NEW']:not(:empty)::after {
         color: red;
-        content: ' *';
+        content: '*';
       }
 
       .footer-content {
@@ -357,7 +359,7 @@
         </table>
               <div id="warning" class="mt-2 mb-2 alert alert-danger animate__animated"></div>
       <div class="xs mt-2 mb-2"><label><input type="checkbox" name="additional"> Advanced: Show decimals</label></div>
-      <details class="xs">
+      <details class="ml-2 xs">
         <summary>Click to see GameSettings.ini (entries are below <span class="code">[INPUT]</span>)</summary>
         <pre>AimDownSightsMouse=<span class="sens1">55</span>
 ADSMouseUseSpecific=1
