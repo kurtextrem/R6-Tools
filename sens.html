@@ -1,36 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width">
     <title>Convert pre-Shadow Legacy to Shadow Legacy ADS - Rainbow Six Siege</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
     <style>
       body {
-        font-size: 16px;
-        font-family: "Poppins", sans-serif;
+        margin: 0;
+      }
+
+      body, input, select {
+        font-size: 1.1em;
       }
 
       .details {
-        margin: 15px;
         display: block;
+        margin: 15px;
       }
 
-      input[type="number"] {
-        width: 50px;
+      input[type='number'] {
+        width: 52px;
+      }
+
+      ol {
+        padding-left: 1.3em;
+      }
+
+      li {
+        padding-top: 0.2em;
+        padding-bottom: 0.2em;
       }
 
       .gamesettings {
         display: block;
+        margin: 1em 0;
         font-family: monospace;
         white-space: pre;
-        margin: 1em 0px;
       }
 
-      output[name="x1"],
-      output[name="x25"] {
+      output[name='x1'],
+      output[name='x25'] {
         font-weight: bold;
       }
 
@@ -44,6 +52,10 @@
 
       .text-center {
         text-align: center;
+      }
+
+      .ml-2 {
+        margin-left: 0.5rem;
       }
 
       .mt-2 {
@@ -78,25 +90,23 @@
         display: none;
       }
 
-      li > [class$="NEW"]:not(:empty)::before,
-      div:not(.gamesettings) > [class$="NEW"]:not(:empty)::before {
-        content: " = ";
-      }
-      li > [class$="NEW"]:not(:empty)::after,
-      div:not(.gamesettings) > [class$="NEW"]:not(:empty)::after {
-        content: " *";
-        color: red;
+      output + span:not(:empty)::before,
+      b + span[class$='NEW']:not(:empty)::before,
+      div:not(.gamesettings) > [class$='NEW']:not(:empty)::before {
+        content: ' = ';
       }
 
-      footer {
-        border-top: 1px solid #c3c3c3;
+      output + span:not(:empty)::after,
+      b + span[class$='NEW']:not(:empty)::after,
+      div:not(.gamesettings) > [class$='NEW']:not(:empty)::after {
+        color: red;
+        content: ' *';
       }
 
       .footer-content {
-        padding-top: 1rem;
         max-width: 60vw;
         margin: auto;
-        color: #696969;
+        color: #333;
       }
 
       form {
@@ -104,47 +114,26 @@
         margin: auto;
       }
 
-      header {
-        text-align: center;
-        margin-bottom: 1rem;
-      }
-
-      header h1 {
-        margin: 0.5rem 0;
-      }
-
-      @media (max-width: 800px) {
-        .footer-content {
-          max-width: 100%;
-          padding-left: 0.5rem;
-          padding-right: 0.5rem;
-        }
-
-        form {
-          max-width: 100%;
-          padding-left: 0.5rem;
-          padding-right: 0.5rem;
-        }
-      }
-
       h6 {
-        font-weight: bold;
         margin: 1rem 0;
+        font-weight: bold;
       }
 
       .heart {
         color: red;
       }
 
-      table,
-      td,
-      th {
-        border: 1px solid #c3c3c3;
-        text-align: center;
+      table {
+        padding-left: 0.1em;
+        text-align: left;
       }
 
-      td:first-of-type {
-        border-top-left-radius: 4px;
+      td {
+        border: 1px solid #c3c3c3;
+      }
+
+      th {
+        border-top: 0;
       }
 
       td,
@@ -154,18 +143,22 @@
 
       table {
         border-collapse: collapse;
-        margin: auto;
       }
 
       .alert {
         padding: 0.5rem;
         border: 1px solid #c3c3c3;
         border-radius: 6px;
-        margin-bottom: 0.5rem;
       }
 
       .alert:empty {
         display: none;
+      }
+
+      #info {
+        border-bottom-style: dashed;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
       }
 
       .alert-danger {
@@ -177,52 +170,114 @@
       }
 
       /* Spin Buttons modified */
-
-      input[type="number"]::-webkit-outer-spin-button,
-      input[type="number"]::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        background: #fff
-          url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAKUlEQVQYlWNgwAT/sYhhKPiPT+F/LJgEsHv37v+EMGkmkuImoh2NoQAANlcun/q4OoYAAAAASUVORK5CYII=)
-          no-repeat center center;
-        width: 1em;
-        border-left: 1px solid #bbb;
-        opacity: 0.5; /* shows Spin Buttons per default (Chrome >= 39) */
+      /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
+      input[type='number']::-webkit-outer-spin-button,
+      input[type='number']::-webkit-inner-spin-button {
         position: absolute;
         top: 0;
         right: 0;
         bottom: 0;
+        width: 1em;
+        background: #fff
+          url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAKUlEQVQYlWNgwAT/sYhhKPiPT+F/LJgEsHv37v+EMGkmkuImoh2NoQAANlcun/q4OoYAAAAASUVORK5CYII=)
+          no-repeat center center;
+        border-left: 1px solid #bbb;
+        opacity: 0.5; /* shows Spin Buttons per default (Chrome >= 39) */
+        -webkit-appearance: none;
       }
-      input[type="number"]::-webkit-inner-spin-button:hover,
-      input[type="number"]::-webkit-inner-spin-button:active {
+
+      input[type='number']::-webkit-inner-spin-button:hover,
+      input[type='number']::-webkit-inner-spin-button:active,
+      input[type='number']::-webkit-inner-spin-button:focus,
+      input[type='number']::-webkit-inner-spin-button:active {
         box-shadow: 0 0 2px #0cf;
         opacity: 0.8;
       }
-      input[type="number"] {
+
+      input[type='number'] {
         position: relative;
+        padding: 0.4rem;
         border: 1px solid #c3c3c3;
         border-radius: 6px;
-        padding: 0.4rem;
       }
 
       select {
-        border-radius: 4px;
-        background: transparent;
         padding: 4px;
+        background: transparent;
         border: 1px solid #c3c3c3;
+        border-radius: 4px;
+      }
+
+      /*!
+       * animate.css - https://animate.style/
+       * Version - 4.0.0
+       * Licensed under the MIT license - http://opensource.org/licenses/MIT
+       *
+       * Copyright (c) 2020 Animate.css
+       */
+      .animate__flash {
+        animation-name: flash;
+      }
+
+      @keyframes flash {
+        from,
+        50%,
+        to {
+          opacity: 1;
+        }
+
+        25%,
+        75% {
+          opacity: 0;
+        }
+      }
+
+      .animate__animated {
+        animation-duration: 1s;
+        animation-fill-mode: both;
+      }
+
+      @media (max-width: 800px) {
+        .footer-content {
+          max-width: 100%;
+          padding-right: 0.5rem;
+          padding-left: 0.5rem;
+        }
+
+        form {
+          max-width: 100%;
+          padding-right: 0.5rem;
+          padding-left: 0.5rem;
+        }
+
+        li > span:last-child { display: block; }
       }
     </style>
   </head>
   <body>
-    <header>
-      <h1>Convert pre-Shadow Legacy ADS</h1>
-      <p>
-        Do you want to convert your pre-Shadow Legacy ADS sensitivity to the current format?<br />Enter
-        your data and magically convert it!
-      </p>
-    </header>
     <form name="form">
-      <div class="alert">
-        <b>Make Your Choice</b>
+      <h3 class="mt-2 mb-2">Convert Rainbow Six Siege pre-"Shadow Legacy" ADS to "Shadow Legacy"</h3>
+      <div class="form-group">
+        <label for="sens">Pre-Shadow Legacy <b>ADS</b> sensitivity:</label>&nbsp;
+        <input type="number" id="sens" name="sens" value="83" min="1" max="100" />
+        <br />
+        <label
+          >Aspect ratio:
+          <select name="aspect">
+            <option value="16/9" selected>16:9 (Auto)</option>
+            <option value="16/10">16:10</option>
+            <option value="4/3">4:3</option>
+            <option value="3/2">3:2</option>
+            <option value="5/3">5:3</option>
+            <option value="5/4">5:4</option>
+            <option value="19/10">19:10</option>
+            <option value="21/9">21:9</option>
+          </select> </label
+        ><br />
+        <label>FOV: <input type="number" name="fov" value="75" max="90" min="60" /></label><br />
+      </div>
+      <div id="info" class="alert mt-2 mb-2">
+        <b>Make Your Choice</b> <small>(1 of 4)</small>:
         <ol class="m-0" type="a">
           <li>
             Set every sens to <b id="x1x"></b><span class="x1NEW"></span> (1.0x), so every scope
@@ -244,7 +299,7 @@
             </span>
           </li>
           <li>
-            Or, restore the old behavior (pre-Shadow Legacy) - use all the values of the calculator
+            Restore the old behavior (pre-Shadow Legacy) - use all the values of the calculator
             to match the old feeling
             <small class="xs"
               >(uses official
@@ -252,65 +307,58 @@
                 href="https://www.ubisoft.com/en-us/game/rainbow-six/siege/news-updates/3IMlDGlaRFgdvQNq3BOSFv/guide-to-ads-sensitivity-in-y5s3"
                 >Ubisoft</a
               >
-              values):</small
-            >
+              values)</small
+            >:
           </li>
         </ol>
       </div>
-      <div class="form-group">
-        <label for="sens">Pre-Shadow Legacy (Live) <b>ADS</b> sensitivity:</label>&nbsp;
-        <input type="number" id="sens" name="sens" value="83" min="1" />
-        <br />
-        <label
-          >Aspect ratio:
-          <select name="aspect">
-            <option value="16/9" selected>16:9 (Auto)</option>
-            <option value="16/10">16:10</option>
-            <option value="4/3">4:3</option>
-            <option value="3/2">3:2</option>
-            <option value="5/3">5:3</option>
-            <option value="5/4">5:4</option>
-            <option value="19/10">19:10</option>
-            <option value="21/9">21:9</option>
-          </select> </label
-        ><br />
-        <label>FOV: <input type="number" name="fov" value="75" max="90" min="60" /></label><br />
-      </div>
-      <label><input type="checkbox" name="additional" />Show decimals</label>
-      <div id="warning" class="mt-2 alert alert-danger"></div>
-
-      <div>
+      <div class="ml-2">
         <table>
           <thead>
             <tr>
               <th>Scope</th>
-              <th>1.0x</th>
-              <th>1.5x</th>
-              <th>2.0x</th>
-              <th>2.5x (new ACOG)</th>
-              <th>3.0x</th>
-              <th>4.0x</th>
-              <th>5.0x</th>
-              <th>12.0x</th>
+              <th>Sensitivity</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Sensitivity</td>
+              <td>1.0x</td>
               <td><output name="x1" for="sens"></output><span class="x1NEW"></span></td>
+            </tr>
+            <tr>
+              <td>1.5x</td>
               <td><output name="x15" for="sens"></output><span class="x15NEW"></span></td>
+            </tr>
+            <tr>
+              <td>2.0x</td>
               <td><output name="x2" for="sens"></output><span class="x2NEW"></span></td>
+            </tr>
+            <tr>
+              <td>2.5x (new ACOG)</td>
               <td><output name="x25" for="sens"></output><span class="x25NEW"></span></td>
+            </tr>
+            <tr>
+              <td>3.0x</td>
               <td><output name="x3" for="sens"></output><span class="x3NEW"></span></td>
+            </tr>
+            <tr>
+              <td>4.0x</td>
               <td><output name="x4" for="sens"></output><span class="x4NEW"></span></td>
+            </tr>
+            <tr>
+              <td>5.0x</td>
               <td><output name="x5" for="sens"></output><span class="x5NEW"></span></td>
+            </tr>
+            <tr>
+              <td>12.0x</td>
               <td><output name="x12" for="sens"></output><span class="x12NEW"></span></td>
             </tr>
           </tbody>
         </table>
-      </div>
-      <div class="details">
-        GameSettings.ini
+              <div id="warning" class="mt-2 mb-2 alert alert-danger animate__animated"></div>
+      <div class="xs mt-2 mb-2"><label><input type="checkbox" name="additional"> Advanced: Show decimals</label></div>
+      <details class="xs">
+        <summary>Click to see GameSettings.ini (entries are below <span class="code">[INPUT]</span>)</summary>
         <pre>AimDownSightsMouse=<span class="sens1">55</span>
 ADSMouseUseSpecific=1
 ADSMouseSensitivityGlobal=<span class="sens2">50</span>
@@ -324,7 +372,7 @@ ADSMouseSensitivity5x=<span id="x5">63</span>
 ADSMouseSensitivity12x=<span id="x12">97</span>
 ADSMouseMultiplierUnit=0.020000</pre>
         <div id="warning2">
-          <b>If you change ADSMouseMultiplierUnit:</b>
+          <b>If you change <span class="code">ADSMouseMultiplierUnit</span>:</b>
           <pre class="gamesettings">AimDownSightsMouse=<span class="sens1">55</span>
 ADSMouseUseSpecific=1
 ADSMouseSensitivityGlobal=<span class="sens2">50</span>
@@ -338,42 +386,23 @@ ADSMouseSensitivity5x=<span class="x5NEW">63</span>
 ADSMouseSensitivity12x=<span class="x12NEW">97</span>
 ADSMouseMultiplierUnit=0.010000</pre>
         </div>
+      </details>
       </div>
-      <footer>
+      <footer class="mb-2">
         <div class="footer-content">
           <h6>Changelog</h6>
           <div class="changelog">
             09/11/2020:
-            <div style="margin-top: 0.4em; margin-left: 0.5em">
-              Added "Show decimals" option. You can use it to make the calculation more accurate,
-              requires changing GameSettings.ini though.<br />I'll use Twitter (<a
+            <div class="ml-2 mt-2">
+              Added "Show decimals" option. This might increase accuracy in some cases,
+              but requires changing GameSettings.ini.<br />I'll use Twitter (<a
                 href="https://twitter.com/kurtextrem"
                 >@kurtextrem</a
               >) to communicate further updates.
             </div>
           </div>
-          <br /><small>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-alert-triangle"
-              style="position: relative; top: 2px"
-            >
-              <path
-                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
-              ></path>
-              <line x1="12" y1="9" x2="12" y2="13"></line>
-              <line x1="12" y1="17" x2="12.01" y2="17"></line>
-            </svg>
-
-            If you have changed your <span class="code">XFactorAiming</span> value in
+          <br>
+          <small>P.S.: If you have changed your <span class="code">XFactorAiming</span> value in
             GameSettings.ini, you need to set the exact value to
             <span class="code">ADSMouseMultiplierUnit</span> now in GameSettings.ini.</small
           ><br />
